@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      max-width: 400px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .welcome-text {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .username {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      color: #007BFF;
+    }
+    .logout-btn {
+      background-color: #007BFF;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto 0;
+      transition: background-color 0.2s ease;
+    }
+    .logout-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="welcome-text">Welcome to Your Dashboard</div>
+    <p class="username" id="username"></p>
+    <button class="logout-btn" id="logoutBtn">Log Out</button>
+  </div>
+  <script>
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      const username = decodedToken.email;
+      const usernameElement = document.getElementById('username');
+      usernameElement.textContent = username;
+    }
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('token');
+      window.location.href = '/'; 
+    });
+  </script>
+</body>
+</html>
